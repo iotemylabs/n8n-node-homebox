@@ -1,0 +1,2306 @@
+{
+  "meta": {
+    "fork": "sysadminsmedia/homebox",
+    "version": "v0.26.2",
+    "commit": "e01dd737238a3fa7e1a6454b37de6c6fc88c86e4",
+    "specFormat": "swagger 2.0",
+    "basePath": "/api",
+    "fetchedFrom": "http://192.168.1.246:3100/swagger/doc.json",
+    "fetchDate": "2026-08-20",
+    "auth": {
+      "scheme": "API key in Authorization header",
+      "format": "Authorization: Bearer <key> (raw key without Bearer prefix also accepted; package sends Bearer)",
+      "keyPrefix": "hb_",
+      "createdIn": "Homebox UI -> Profile -> API Keys (POST /v1/users/self/api-keys)",
+      "scopes": "none - key grants full access of the creating user",
+      "expiry": "optional expiresAt per key, may be null (non-expiring)"
+    },
+    "sourceVerifiedNotes": "Query params marked source:true are implemented by the handler at the pinned commit but absent from the swagger annotations."
+  },
+  "operations": [
+    {
+      "operationId": "post:/v1/actions/create-missing-thumbnails",
+      "verb": "POST",
+      "path": "/api/v1/actions/create-missing-thumbnails",
+      "tag": "Actions",
+      "summary": "Create Missing Thumbnails",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [],
+      "responses": {
+        "200": "#/definitions/v1.ActionAmountResult"
+      }
+    },
+    {
+      "operationId": "post:/v1/actions/ensure-asset-ids",
+      "verb": "POST",
+      "path": "/api/v1/actions/ensure-asset-ids",
+      "tag": "Actions",
+      "summary": "Ensure Asset IDs",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [],
+      "responses": {
+        "200": "#/definitions/v1.ActionAmountResult"
+      }
+    },
+    {
+      "operationId": "post:/v1/actions/ensure-import-refs",
+      "verb": "POST",
+      "path": "/api/v1/actions/ensure-import-refs",
+      "tag": "Actions",
+      "summary": "Ensures Import Refs",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [],
+      "responses": {
+        "200": "#/definitions/v1.ActionAmountResult"
+      }
+    },
+    {
+      "operationId": "post:/v1/actions/set-primary-photos",
+      "verb": "POST",
+      "path": "/api/v1/actions/set-primary-photos",
+      "tag": "Actions",
+      "summary": "Set Primary Photos",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [],
+      "responses": {
+        "200": "#/definitions/v1.ActionAmountResult"
+      }
+    },
+    {
+      "operationId": "post:/v1/actions/wipe-inventory",
+      "verb": "POST",
+      "path": "/api/v1/actions/wipe-inventory",
+      "tag": "Actions",
+      "summary": "Wipe Inventory",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "body",
+          "in": "body",
+          "schema": "#/definitions/v1.WipeInventoryOptions"
+        }
+      ],
+      "responses": {
+        "200": "#/definitions/v1.ActionAmountResult"
+      }
+    },
+    {
+      "operationId": "post:/v1/actions/zero-item-time-fields",
+      "verb": "POST",
+      "path": "/api/v1/actions/zero-item-time-fields",
+      "tag": "Actions",
+      "summary": "Zero Out Time Fields",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [],
+      "responses": {
+        "200": "#/definitions/v1.ActionAmountResult"
+      }
+    },
+    {
+      "operationId": "get:/v1/assets/{id}",
+      "verb": "GET",
+      "path": "/api/v1/assets/{id}",
+      "tag": "Items",
+      "summary": "Get Item by Asset ID",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "responses": {
+        "200": "#/definitions/repo.PaginationResult-repo_EntitySummary"
+      }
+    },
+    {
+      "operationId": "get:/v1/currency",
+      "verb": "GET",
+      "path": "/api/v1/currency",
+      "tag": "Base",
+      "summary": "Currency",
+      "auth": false,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [],
+      "responses": {
+        "200": "#/definitions/currencies.Currency"
+      }
+    },
+    {
+      "operationId": "get:/v1/entities",
+      "verb": "GET",
+      "path": "/api/v1/entities",
+      "tag": "Entities",
+      "summary": "Query All Entities",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "q",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "page",
+          "in": "query",
+          "type": "integer"
+        },
+        {
+          "name": "pageSize",
+          "in": "query",
+          "type": "integer"
+        },
+        {
+          "name": "tags",
+          "in": "query",
+          "type": "array"
+        },
+        {
+          "name": "parentIds",
+          "in": "query",
+          "type": "array"
+        },
+        {
+          "name": "negateTags",
+          "in": "query",
+          "type": "boolean",
+          "source": true,
+          "note": "invert the tags filter"
+        },
+        {
+          "name": "onlyWithPhoto",
+          "in": "query",
+          "type": "boolean",
+          "source": true
+        },
+        {
+          "name": "onlyWithoutPhoto",
+          "in": "query",
+          "type": "boolean",
+          "source": true
+        },
+        {
+          "name": "includeArchived",
+          "in": "query",
+          "type": "boolean",
+          "source": true,
+          "note": "archived entities are EXCLUDED by default"
+        },
+        {
+          "name": "fields",
+          "in": "query",
+          "type": "array[string]",
+          "source": true,
+          "note": "custom-field filters, each 'name=value', repeatable"
+        },
+        {
+          "name": "orderBy",
+          "in": "query",
+          "type": "string",
+          "enum": [
+            "name",
+            "createdAt",
+            "updatedAt",
+            "assetId"
+          ],
+          "source": true,
+          "note": "createdAt/updatedAt sort DESC, name/assetId ASC; default name"
+        },
+        {
+          "name": "isLocation",
+          "in": "query",
+          "type": "boolean",
+          "source": true,
+          "note": "true = locations only, false/absent = items only"
+        },
+        {
+          "name": "filterChildren",
+          "in": "query",
+          "type": "boolean",
+          "source": true,
+          "note": "with parentIds: direct children only vs whole subtree"
+        }
+      ],
+      "responses": {
+        "200": "#/definitions/repo.EntityListResult"
+      }
+    },
+    {
+      "operationId": "post:/v1/entities",
+      "verb": "POST",
+      "path": "/api/v1/entities",
+      "tag": "Entities",
+      "summary": "Create Entity",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "body",
+          "in": "body",
+          "schema": "#/definitions/repo.EntityCreate"
+        }
+      ],
+      "responses": {
+        "201": "#/definitions/repo.EntityOut"
+      }
+    },
+    {
+      "operationId": "get:/v1/entities/export",
+      "verb": "GET",
+      "path": "/api/v1/entities/export",
+      "tag": "Entities",
+      "summary": "Export Entities",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [],
+      "responses": {
+        "200": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "operationId": "get:/v1/entities/fields",
+      "verb": "GET",
+      "path": "/api/v1/entities/fields",
+      "tag": "Entities",
+      "summary": "Get All Custom Field Names",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [],
+      "responses": {
+        "200": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "operationId": "get:/v1/entities/fields/values",
+      "verb": "GET",
+      "path": "/api/v1/entities/fields/values",
+      "tag": "Entities",
+      "summary": "Get All Custom Field Values",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "field",
+          "in": "query",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "responses": {
+        "200": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "operationId": "post:/v1/entities/import",
+      "verb": "POST",
+      "path": "/api/v1/entities/import",
+      "tag": "Entities",
+      "summary": "Import Entities",
+      "auth": true,
+      "consumes": [
+        "multipart/form-data"
+      ],
+      "parameters": [
+        {
+          "name": "csv",
+          "in": "formData",
+          "type": "file",
+          "required": true
+        }
+      ],
+      "responses": {
+        "204": null
+      }
+    },
+    {
+      "operationId": "get:/v1/entities/tree",
+      "verb": "GET",
+      "path": "/api/v1/entities/tree",
+      "tag": "Entities",
+      "summary": "Get Locations Tree",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "withItems",
+          "in": "query",
+          "type": "boolean"
+        }
+      ],
+      "responses": {
+        "200": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/repo.TreeItem"
+          }
+        }
+      }
+    },
+    {
+      "operationId": "get:/v1/entities/{id}",
+      "verb": "GET",
+      "path": "/api/v1/entities/{id}",
+      "tag": "Entities",
+      "summary": "Get Entity",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "responses": {
+        "200": "#/definitions/repo.EntityOut"
+      }
+    },
+    {
+      "operationId": "put:/v1/entities/{id}",
+      "verb": "PUT",
+      "path": "/api/v1/entities/{id}",
+      "tag": "Entities",
+      "summary": "Update Entity",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "body",
+          "in": "body",
+          "schema": "#/definitions/repo.EntityUpdate"
+        }
+      ],
+      "responses": {
+        "200": "#/definitions/repo.EntityOut"
+      }
+    },
+    {
+      "operationId": "delete:/v1/entities/{id}",
+      "verb": "DELETE",
+      "path": "/api/v1/entities/{id}",
+      "tag": "Entities",
+      "summary": "Delete Entity",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "responses": {
+        "204": null
+      }
+    },
+    {
+      "operationId": "patch:/v1/entities/{id}",
+      "verb": "PATCH",
+      "path": "/api/v1/entities/{id}",
+      "tag": "Entities",
+      "summary": "Patch Entity",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "body",
+          "in": "body",
+          "schema": "#/definitions/repo.EntityPatch"
+        }
+      ],
+      "responses": {
+        "200": "#/definitions/repo.EntityOut"
+      }
+    },
+    {
+      "operationId": "post:/v1/entities/{id}/attachments",
+      "verb": "POST",
+      "path": "/api/v1/entities/{id}/attachments",
+      "tag": "Entities Attachments",
+      "summary": "Create Entity Attachment",
+      "auth": true,
+      "consumes": [
+        "multipart/form-data"
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "file",
+          "in": "formData",
+          "type": "file",
+          "required": true
+        },
+        {
+          "name": "type",
+          "in": "formData",
+          "type": "string"
+        },
+        {
+          "name": "primary",
+          "in": "formData",
+          "type": "boolean"
+        },
+        {
+          "name": "name",
+          "in": "formData",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "responses": {
+        "201": "#/definitions/repo.EntityOut",
+        "422": "#/definitions/validate.ErrorResponse"
+      }
+    },
+    {
+      "operationId": "post:/v1/entities/{id}/attachments/external",
+      "verb": "POST",
+      "path": "/api/v1/entities/{id}/attachments/external",
+      "tag": "Entities Attachments",
+      "summary": "Create External Link Attachment",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "body",
+          "in": "body",
+          "schema": "#/definitions/v1.externalAttachmentRequest"
+        }
+      ],
+      "responses": {
+        "201": "#/definitions/repo.EntityOut",
+        "400": "#/definitions/validate.ErrorResponse"
+      }
+    },
+    {
+      "operationId": "get:/v1/entities/{id}/attachments/{attachment_id}",
+      "verb": "GET",
+      "path": "/api/v1/entities/{id}/attachments/{attachment_id}",
+      "tag": "Entities Attachments",
+      "summary": "Get Entity Attachment",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "attachment_id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "responses": {
+        "200": {
+          "type": "file"
+        }
+      }
+    },
+    {
+      "operationId": "put:/v1/entities/{id}/attachments/{attachment_id}",
+      "verb": "PUT",
+      "path": "/api/v1/entities/{id}/attachments/{attachment_id}",
+      "tag": "Entities Attachments",
+      "summary": "Update Entity Attachment",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "attachment_id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "body",
+          "in": "body",
+          "schema": "#/definitions/repo.ItemAttachmentUpdate"
+        }
+      ],
+      "responses": {
+        "200": "#/definitions/repo.EntityOut"
+      }
+    },
+    {
+      "operationId": "delete:/v1/entities/{id}/attachments/{attachment_id}",
+      "verb": "DELETE",
+      "path": "/api/v1/entities/{id}/attachments/{attachment_id}",
+      "tag": "Entities Attachments",
+      "summary": "Delete Entity Attachment",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "attachment_id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "responses": {
+        "204": null
+      }
+    },
+    {
+      "operationId": "post:/v1/entities/{id}/duplicate",
+      "verb": "POST",
+      "path": "/api/v1/entities/{id}/duplicate",
+      "tag": "Entities",
+      "summary": "Duplicate Entity",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "body",
+          "in": "body",
+          "schema": "#/definitions/repo.DuplicateOptions"
+        }
+      ],
+      "responses": {
+        "201": "#/definitions/repo.EntityOut"
+      }
+    },
+    {
+      "operationId": "get:/v1/entities/{id}/maintenance",
+      "verb": "GET",
+      "path": "/api/v1/entities/{id}/maintenance",
+      "tag": "Item Maintenance",
+      "summary": "Get Maintenance Log",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "status",
+          "in": "query",
+          "type": "string",
+          "enum": [
+            "scheduled",
+            "completed",
+            "both"
+          ]
+        }
+      ],
+      "responses": {
+        "200": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/repo.MaintenanceEntryWithDetails"
+          }
+        }
+      }
+    },
+    {
+      "operationId": "post:/v1/entities/{id}/maintenance",
+      "verb": "POST",
+      "path": "/api/v1/entities/{id}/maintenance",
+      "tag": "Item Maintenance",
+      "summary": "Create Maintenance Entry",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "body",
+          "in": "body",
+          "schema": "#/definitions/repo.MaintenanceEntryCreate"
+        }
+      ],
+      "responses": {
+        "201": "#/definitions/repo.MaintenanceEntry"
+      }
+    },
+    {
+      "operationId": "get:/v1/entities/{id}/path",
+      "verb": "GET",
+      "path": "/api/v1/entities/{id}/path",
+      "tag": "Entities",
+      "summary": "Get the full path of an entity",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "responses": {
+        "200": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/repo.EntityPath"
+          }
+        }
+      }
+    },
+    {
+      "operationId": "get:/v1/entity-types",
+      "verb": "GET",
+      "path": "/api/v1/entity-types",
+      "tag": "Entity Types",
+      "summary": "Get All Entity Types",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [],
+      "responses": {
+        "200": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/repo.EntityTypeSummary"
+          }
+        }
+      }
+    },
+    {
+      "operationId": "post:/v1/entity-types",
+      "verb": "POST",
+      "path": "/api/v1/entity-types",
+      "tag": "Entity Types",
+      "summary": "Create Entity Type",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "body",
+          "in": "body",
+          "schema": "#/definitions/repo.EntityTypeCreate"
+        }
+      ],
+      "responses": {
+        "201": "#/definitions/repo.EntityTypeSummary"
+      }
+    },
+    {
+      "operationId": "put:/v1/entity-types/{id}",
+      "verb": "PUT",
+      "path": "/api/v1/entity-types/{id}",
+      "tag": "Entity Types",
+      "summary": "Update Entity Type",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "body",
+          "in": "body",
+          "schema": "#/definitions/repo.EntityTypeUpdate"
+        }
+      ],
+      "responses": {
+        "200": "#/definitions/repo.EntityTypeSummary"
+      }
+    },
+    {
+      "operationId": "delete:/v1/entity-types/{id}",
+      "verb": "DELETE",
+      "path": "/api/v1/entity-types/{id}",
+      "tag": "Entity Types",
+      "summary": "Delete Entity Type",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "responses": {
+        "204": null
+      }
+    },
+    {
+      "operationId": "get:/v1/group/exports",
+      "verb": "GET",
+      "path": "/api/v1/group/exports",
+      "tag": "Group",
+      "summary": "List Collection Exports",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [],
+      "responses": {
+        "200": "#/definitions/v1.Results-repo_ExportOut"
+      }
+    },
+    {
+      "operationId": "post:/v1/group/exports",
+      "verb": "POST",
+      "path": "/api/v1/group/exports",
+      "tag": "Group",
+      "summary": "Start a Collection Export",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [],
+      "responses": {
+        "202": "#/definitions/repo.ExportOut"
+      }
+    },
+    {
+      "operationId": "get:/v1/group/exports/{id}",
+      "verb": "GET",
+      "path": "/api/v1/group/exports/{id}",
+      "tag": "Group",
+      "summary": "Get an Export",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "responses": {
+        "200": "#/definitions/repo.ExportOut"
+      }
+    },
+    {
+      "operationId": "delete:/v1/group/exports/{id}",
+      "verb": "DELETE",
+      "path": "/api/v1/group/exports/{id}",
+      "tag": "Group",
+      "summary": "Delete an Export",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "responses": {
+        "204": null
+      }
+    },
+    {
+      "operationId": "get:/v1/group/exports/{id}/download",
+      "verb": "GET",
+      "path": "/api/v1/group/exports/{id}/download",
+      "tag": "Group",
+      "summary": "Download an Export Artifact",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "responses": {
+        "200": {
+          "type": "file"
+        }
+      }
+    },
+    {
+      "operationId": "post:/v1/group/import",
+      "verb": "POST",
+      "path": "/api/v1/group/import",
+      "tag": "Group",
+      "summary": "Import a Collection Zip",
+      "auth": true,
+      "consumes": [
+        "multipart/form-data"
+      ],
+      "parameters": [
+        {
+          "name": "file",
+          "in": "formData",
+          "type": "file",
+          "required": true
+        }
+      ],
+      "responses": {
+        "202": "#/definitions/repo.ExportOut"
+      }
+    },
+    {
+      "operationId": "get:/v1/groups",
+      "verb": "GET",
+      "path": "/api/v1/groups",
+      "tag": "Group",
+      "summary": "Get Group",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [],
+      "responses": {
+        "200": "#/definitions/repo.Group"
+      }
+    },
+    {
+      "operationId": "put:/v1/groups",
+      "verb": "PUT",
+      "path": "/api/v1/groups",
+      "tag": "Group",
+      "summary": "Update Group",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "body",
+          "in": "body",
+          "schema": "#/definitions/repo.GroupUpdate"
+        }
+      ],
+      "responses": {
+        "200": "#/definitions/repo.Group"
+      }
+    },
+    {
+      "operationId": "post:/v1/groups",
+      "verb": "POST",
+      "path": "/api/v1/groups",
+      "tag": "Group",
+      "summary": "Create Group",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "body",
+          "in": "body",
+          "schema": "#/definitions/v1.CreateRequest"
+        }
+      ],
+      "responses": {
+        "201": "#/definitions/repo.Group"
+      }
+    },
+    {
+      "operationId": "delete:/v1/groups",
+      "verb": "DELETE",
+      "path": "/api/v1/groups",
+      "tag": "Group",
+      "summary": "Delete Group",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [],
+      "responses": {
+        "204": null
+      }
+    },
+    {
+      "operationId": "get:/v1/groups/all",
+      "verb": "GET",
+      "path": "/api/v1/groups/all",
+      "tag": "Group",
+      "summary": "Get All Groups",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [],
+      "responses": {
+        "200": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/repo.Group"
+          }
+        }
+      }
+    },
+    {
+      "operationId": "get:/v1/groups/invitations",
+      "verb": "GET",
+      "path": "/api/v1/groups/invitations",
+      "tag": "Group",
+      "summary": "Get All Group Invitations",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [],
+      "responses": {
+        "200": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/repo.GroupInvitation"
+          }
+        }
+      }
+    },
+    {
+      "operationId": "groupInvitationCreate",
+      "verb": "POST",
+      "path": "/api/v1/groups/invitations",
+      "tag": "Group",
+      "summary": "Create Group Invitation",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "body",
+          "in": "body",
+          "schema": "#/definitions/v1.GroupInvitationCreate"
+        }
+      ],
+      "responses": {
+        "200": "#/definitions/v1.GroupInvitation"
+      }
+    },
+    {
+      "operationId": "groupInvitationAccept",
+      "verb": "POST",
+      "path": "/api/v1/groups/invitations/{id}",
+      "tag": "Group",
+      "summary": "Accept Group Invitation",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "responses": {
+        "200": "#/definitions/v1.GroupAcceptInvitationResponse"
+      }
+    },
+    {
+      "operationId": "delete:/v1/groups/invitations/{id}",
+      "verb": "DELETE",
+      "path": "/api/v1/groups/invitations/{id}",
+      "tag": "Group",
+      "summary": "Delete Group Invitation",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "responses": {
+        "204": null
+      }
+    },
+    {
+      "operationId": "get:/v1/groups/members",
+      "verb": "GET",
+      "path": "/api/v1/groups/members",
+      "tag": "Group",
+      "summary": "Get All Group Members",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [],
+      "responses": {
+        "200": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/repo.UserSummary"
+          }
+        }
+      }
+    },
+    {
+      "operationId": "delete:/v1/groups/members/{user_id}",
+      "verb": "DELETE",
+      "path": "/api/v1/groups/members/{user_id}",
+      "tag": "Group",
+      "summary": "Remove User from Group",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "user_id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "responses": {
+        "204": null
+      }
+    },
+    {
+      "operationId": "get:/v1/groups/statistics",
+      "verb": "GET",
+      "path": "/api/v1/groups/statistics",
+      "tag": "Statistics",
+      "summary": "Get Group Statistics",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [],
+      "responses": {
+        "200": "#/definitions/repo.GroupStatistics"
+      }
+    },
+    {
+      "operationId": "get:/v1/groups/statistics/locations",
+      "verb": "GET",
+      "path": "/api/v1/groups/statistics/locations",
+      "tag": "Statistics",
+      "summary": "Get Location Statistics",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [],
+      "responses": {
+        "200": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/repo.TotalsByOrganizer"
+          }
+        }
+      }
+    },
+    {
+      "operationId": "get:/v1/groups/statistics/purchase-price",
+      "verb": "GET",
+      "path": "/api/v1/groups/statistics/purchase-price",
+      "tag": "Statistics",
+      "summary": "Get Purchase Price Statistics",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "start",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "end",
+          "in": "query",
+          "type": "string"
+        }
+      ],
+      "responses": {
+        "200": "#/definitions/repo.ValueOverTime"
+      }
+    },
+    {
+      "operationId": "get:/v1/groups/statistics/tags",
+      "verb": "GET",
+      "path": "/api/v1/groups/statistics/tags",
+      "tag": "Statistics",
+      "summary": "Get Tags Statistics",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [],
+      "responses": {
+        "200": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/repo.TotalsByOrganizer"
+          }
+        }
+      }
+    },
+    {
+      "operationId": "get:/v1/labelmaker/asset/{id}",
+      "verb": "GET",
+      "path": "/api/v1/labelmaker/asset/{id}",
+      "tag": "Items",
+      "summary": "Get Asset label",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "print",
+          "in": "query",
+          "type": "boolean"
+        }
+      ],
+      "responses": {
+        "200": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "operationId": "get:/v1/labelmaker/item/{id}",
+      "verb": "GET",
+      "path": "/api/v1/labelmaker/item/{id}",
+      "tag": "Items",
+      "summary": "Get Item label",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "print",
+          "in": "query",
+          "type": "boolean"
+        }
+      ],
+      "responses": {
+        "200": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "operationId": "get:/v1/labelmaker/location/{id}",
+      "verb": "GET",
+      "path": "/api/v1/labelmaker/location/{id}",
+      "tag": "Locations",
+      "summary": "Get Location label",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "print",
+          "in": "query",
+          "type": "boolean"
+        }
+      ],
+      "responses": {
+        "200": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "operationId": "get:/v1/maintenance",
+      "verb": "GET",
+      "path": "/api/v1/maintenance",
+      "tag": "Maintenance",
+      "summary": "Query All Maintenance",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "status",
+          "in": "query",
+          "type": "string",
+          "enum": [
+            "scheduled",
+            "completed",
+            "both"
+          ]
+        }
+      ],
+      "responses": {
+        "200": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/repo.MaintenanceEntryWithDetails"
+          }
+        }
+      }
+    },
+    {
+      "operationId": "put:/v1/maintenance/{id}",
+      "verb": "PUT",
+      "path": "/api/v1/maintenance/{id}",
+      "tag": "Maintenance",
+      "summary": "Update Maintenance Entry",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "body",
+          "in": "body",
+          "schema": "#/definitions/repo.MaintenanceEntryUpdate"
+        }
+      ],
+      "responses": {
+        "200": "#/definitions/repo.MaintenanceEntry"
+      }
+    },
+    {
+      "operationId": "delete:/v1/maintenance/{id}",
+      "verb": "DELETE",
+      "path": "/api/v1/maintenance/{id}",
+      "tag": "Maintenance",
+      "summary": "Delete Maintenance Entry",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "responses": {
+        "204": null
+      }
+    },
+    {
+      "operationId": "get:/v1/notifiers",
+      "verb": "GET",
+      "path": "/api/v1/notifiers",
+      "tag": "Notifiers",
+      "summary": "Get Notifiers",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [],
+      "responses": {
+        "200": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/repo.NotifierOut"
+          }
+        }
+      }
+    },
+    {
+      "operationId": "post:/v1/notifiers",
+      "verb": "POST",
+      "path": "/api/v1/notifiers",
+      "tag": "Notifiers",
+      "summary": "Create Notifier",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "body",
+          "in": "body",
+          "schema": "#/definitions/repo.NotifierCreate"
+        }
+      ],
+      "responses": {
+        "200": "#/definitions/repo.NotifierOut"
+      }
+    },
+    {
+      "operationId": "post:/v1/notifiers/test",
+      "verb": "POST",
+      "path": "/api/v1/notifiers/test",
+      "tag": "Notifiers",
+      "summary": "Test Notifier",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "url",
+          "in": "query",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "responses": {
+        "204": null
+      }
+    },
+    {
+      "operationId": "put:/v1/notifiers/{id}",
+      "verb": "PUT",
+      "path": "/api/v1/notifiers/{id}",
+      "tag": "Notifiers",
+      "summary": "Update Notifier",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "body",
+          "in": "body",
+          "schema": "#/definitions/repo.NotifierUpdate"
+        }
+      ],
+      "responses": {
+        "200": "#/definitions/repo.NotifierOut"
+      }
+    },
+    {
+      "operationId": "delete:/v1/notifiers/{id}",
+      "verb": "DELETE",
+      "path": "/api/v1/notifiers/{id}",
+      "tag": "Notifiers",
+      "summary": "Delete a Notifier",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "responses": {
+        "204": null
+      }
+    },
+    {
+      "operationId": "get:/v1/products/search-from-barcode",
+      "verb": "GET",
+      "path": "/api/v1/products/search-from-barcode",
+      "tag": "Items",
+      "summary": "Search EAN from Barcode",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "data",
+          "in": "query",
+          "type": "string"
+        }
+      ],
+      "responses": {
+        "200": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/repo.BarcodeProduct"
+          }
+        }
+      }
+    },
+    {
+      "operationId": "get:/v1/qrcode",
+      "verb": "GET",
+      "path": "/api/v1/qrcode",
+      "tag": "Items",
+      "summary": "Create QR Code",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "data",
+          "in": "query",
+          "type": "string"
+        }
+      ],
+      "responses": {
+        "200": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "operationId": "get:/v1/reporting/bill-of-materials",
+      "verb": "GET",
+      "path": "/api/v1/reporting/bill-of-materials",
+      "tag": "Reporting",
+      "summary": "Export Bill of Materials",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [],
+      "responses": {
+        "200": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "operationId": "get:/v1/status",
+      "verb": "GET",
+      "path": "/api/v1/status",
+      "tag": "Base",
+      "summary": "Application Info",
+      "auth": false,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [],
+      "responses": {
+        "200": "#/definitions/v1.APISummary"
+      }
+    },
+    {
+      "operationId": "get:/v1/tags",
+      "verb": "GET",
+      "path": "/api/v1/tags",
+      "tag": "Tags",
+      "summary": "Get All Tags",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [],
+      "responses": {
+        "200": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/repo.TagSummary"
+          }
+        }
+      }
+    },
+    {
+      "operationId": "post:/v1/tags",
+      "verb": "POST",
+      "path": "/api/v1/tags",
+      "tag": "Tags",
+      "summary": "Create Tag",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "body",
+          "in": "body",
+          "schema": "#/definitions/repo.TagCreate"
+        }
+      ],
+      "responses": {
+        "201": "#/definitions/repo.TagOut"
+      }
+    },
+    {
+      "operationId": "get:/v1/tags/{id}",
+      "verb": "GET",
+      "path": "/api/v1/tags/{id}",
+      "tag": "Tags",
+      "summary": "Get Tag",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "responses": {
+        "200": "#/definitions/repo.TagOut"
+      }
+    },
+    {
+      "operationId": "put:/v1/tags/{id}",
+      "verb": "PUT",
+      "path": "/api/v1/tags/{id}",
+      "tag": "Tags",
+      "summary": "Update Tag",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "body",
+          "in": "body",
+          "schema": "#/definitions/repo.TagUpdate"
+        }
+      ],
+      "responses": {
+        "200": "#/definitions/repo.TagOut"
+      }
+    },
+    {
+      "operationId": "delete:/v1/tags/{id}",
+      "verb": "DELETE",
+      "path": "/api/v1/tags/{id}",
+      "tag": "Tags",
+      "summary": "Delete Tag",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "responses": {
+        "204": null
+      }
+    },
+    {
+      "operationId": "get:/v1/templates",
+      "verb": "GET",
+      "path": "/api/v1/templates",
+      "tag": "Entity Templates",
+      "summary": "Get All Entity Templates",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [],
+      "responses": {
+        "200": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/repo.EntityTemplateSummary"
+          }
+        }
+      }
+    },
+    {
+      "operationId": "post:/v1/templates",
+      "verb": "POST",
+      "path": "/api/v1/templates",
+      "tag": "Entity Templates",
+      "summary": "Create Entity Template",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "body",
+          "in": "body",
+          "schema": "#/definitions/repo.EntityTemplateCreate"
+        }
+      ],
+      "responses": {
+        "201": "#/definitions/repo.EntityTemplateOut"
+      }
+    },
+    {
+      "operationId": "get:/v1/templates/{id}",
+      "verb": "GET",
+      "path": "/api/v1/templates/{id}",
+      "tag": "Entity Templates",
+      "summary": "Get Entity Template",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "responses": {
+        "200": "#/definitions/repo.EntityTemplateOut"
+      }
+    },
+    {
+      "operationId": "put:/v1/templates/{id}",
+      "verb": "PUT",
+      "path": "/api/v1/templates/{id}",
+      "tag": "Entity Templates",
+      "summary": "Update Entity Template",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "body",
+          "in": "body",
+          "schema": "#/definitions/repo.EntityTemplateUpdate"
+        }
+      ],
+      "responses": {
+        "200": "#/definitions/repo.EntityTemplateOut"
+      }
+    },
+    {
+      "operationId": "delete:/v1/templates/{id}",
+      "verb": "DELETE",
+      "path": "/api/v1/templates/{id}",
+      "tag": "Entity Templates",
+      "summary": "Delete Entity Template",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "responses": {
+        "204": null
+      }
+    },
+    {
+      "operationId": "post:/v1/templates/{id}/create-item",
+      "verb": "POST",
+      "path": "/api/v1/templates/{id}/create-item",
+      "tag": "Entity Templates",
+      "summary": "Create Entity from Template",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "body",
+          "in": "body",
+          "schema": "#/definitions/v1.EntityTemplateCreateItemRequest"
+        }
+      ],
+      "responses": {
+        "201": "#/definitions/repo.EntityOut"
+      }
+    },
+    {
+      "operationId": "put:/v1/users/change-password",
+      "verb": "PUT",
+      "path": "/api/v1/users/change-password",
+      "tag": "User",
+      "summary": "Change Password",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "body",
+          "in": "body",
+          "schema": "#/definitions/v1.ChangePassword"
+        }
+      ],
+      "responses": {
+        "204": null
+      }
+    },
+    {
+      "operationId": "post:/v1/users/forgot-password",
+      "verb": "POST",
+      "path": "/api/v1/users/forgot-password",
+      "tag": "Authentication",
+      "summary": "Request Password Reset",
+      "auth": false,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "body",
+          "in": "body",
+          "schema": "#/definitions/v1.ForgotPasswordRequest"
+        }
+      ],
+      "responses": {
+        "204": null,
+        "400": {
+          "type": "string"
+        },
+        "403": {
+          "type": "string"
+        },
+        "500": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "operationId": "post:/v1/users/login",
+      "verb": "POST",
+      "path": "/api/v1/users/login",
+      "tag": "Authentication",
+      "summary": "User Login",
+      "auth": false,
+      "consumes": [
+        "application/x-www-form-urlencoded",
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "body",
+          "in": "body",
+          "schema": "#/definitions/v1.LoginForm"
+        },
+        {
+          "name": "provider",
+          "in": "query",
+          "type": "string"
+        }
+      ],
+      "responses": {
+        "200": "#/definitions/v1.TokenResponse"
+      }
+    },
+    {
+      "operationId": "get:/v1/users/login/oidc",
+      "verb": "GET",
+      "path": "/api/v1/users/login/oidc",
+      "tag": "Authentication",
+      "summary": "OIDC Login Initiation",
+      "auth": false,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [],
+      "responses": {
+        "302": null
+      }
+    },
+    {
+      "operationId": "get:/v1/users/login/oidc/callback",
+      "verb": "GET",
+      "path": "/api/v1/users/login/oidc/callback",
+      "tag": "Authentication",
+      "summary": "OIDC Callback Handler",
+      "auth": false,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "code",
+          "in": "query",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "state",
+          "in": "query",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "responses": {
+        "302": null
+      }
+    },
+    {
+      "operationId": "post:/v1/users/logout",
+      "verb": "POST",
+      "path": "/api/v1/users/logout",
+      "tag": "Authentication",
+      "summary": "User Logout",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [],
+      "responses": {
+        "204": null
+      }
+    },
+    {
+      "operationId": "get:/v1/users/refresh",
+      "verb": "GET",
+      "path": "/api/v1/users/refresh",
+      "tag": "Authentication",
+      "summary": "User Token Refresh",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [],
+      "responses": {
+        "200": null
+      }
+    },
+    {
+      "operationId": "post:/v1/users/register",
+      "verb": "POST",
+      "path": "/api/v1/users/register",
+      "tag": "User",
+      "summary": "Register New User",
+      "auth": false,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "body",
+          "in": "body",
+          "schema": "#/definitions/services.UserRegistration"
+        }
+      ],
+      "responses": {
+        "204": null,
+        "403": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "operationId": "post:/v1/users/reset-password",
+      "verb": "POST",
+      "path": "/api/v1/users/reset-password",
+      "tag": "Authentication",
+      "summary": "Reset Password",
+      "auth": false,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "body",
+          "in": "body",
+          "schema": "#/definitions/v1.ResetPasswordRequest"
+        }
+      ],
+      "responses": {
+        "204": null,
+        "400": {
+          "type": "string"
+        },
+        "403": {
+          "type": "string"
+        },
+        "500": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "operationId": "get:/v1/users/self",
+      "verb": "GET",
+      "path": "/api/v1/users/self",
+      "tag": "User",
+      "summary": "Get User Self",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [],
+      "responses": {
+        "200": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/v1.Wrapped"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "item": {
+                  "$ref": "#/definitions/repo.UserOut"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "operationId": "put:/v1/users/self",
+      "verb": "PUT",
+      "path": "/api/v1/users/self",
+      "tag": "User",
+      "summary": "Update Account",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "body",
+          "in": "body",
+          "schema": "#/definitions/repo.UserUpdate"
+        }
+      ],
+      "responses": {
+        "200": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/v1.Wrapped"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "item": {
+                  "$ref": "#/definitions/repo.UserUpdate"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "operationId": "delete:/v1/users/self",
+      "verb": "DELETE",
+      "path": "/api/v1/users/self",
+      "tag": "User",
+      "summary": "Delete Account",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [],
+      "responses": {
+        "204": null
+      }
+    },
+    {
+      "operationId": "get:/v1/users/self/api-keys",
+      "verb": "GET",
+      "path": "/api/v1/users/self/api-keys",
+      "tag": "User",
+      "summary": "List API Keys",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [],
+      "responses": {
+        "200": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/repo.APIKeyOut"
+          }
+        }
+      }
+    },
+    {
+      "operationId": "post:/v1/users/self/api-keys",
+      "verb": "POST",
+      "path": "/api/v1/users/self/api-keys",
+      "tag": "User",
+      "summary": "Create API Key",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "body",
+          "in": "body",
+          "schema": "#/definitions/repo.APIKeyCreate"
+        }
+      ],
+      "responses": {
+        "201": "#/definitions/repo.APIKeyCreatedOut"
+      }
+    },
+    {
+      "operationId": "delete:/v1/users/self/api-keys/{id}",
+      "verb": "DELETE",
+      "path": "/api/v1/users/self/api-keys/{id}",
+      "tag": "User",
+      "summary": "Delete API Key",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "responses": {
+        "204": null
+      }
+    },
+    {
+      "operationId": "get:/v1/users/self/settings",
+      "verb": "GET",
+      "path": "/api/v1/users/self/settings",
+      "tag": "User",
+      "summary": "Get user settings",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [],
+      "responses": {
+        "200": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/v1.Wrapped"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "operationId": "put:/v1/users/self/settings",
+      "verb": "PUT",
+      "path": "/api/v1/users/self/settings",
+      "tag": "User",
+      "summary": "Update user settings",
+      "auth": true,
+      "consumes": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "body",
+          "in": "body",
+          "schema": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/v1.Wrapped"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
